@@ -10,7 +10,7 @@ load_dotenv()
 
 # Get credentials and configurations from environment variables
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-PERSONAL_CHAT_ID = os.getenv("PERSONAL_CHAT_ID")
+CHAT_ID = os.getenv("PERSONAL_CHAT_ID")
 HEALTHCHECK_URL = os.getenv("HEALTHCHECK_URL")
 TELEGRAM_API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
@@ -40,7 +40,7 @@ def send_telegram_message(message):
     Sends an alert message to the configured Telegram chat ID.
     """
     payload = {
-        'chat_id': PERSONAL_CHAT_ID,
+        'chat_id': CHAT_ID,
         'text': message,
         'parse_mode': 'HTML'
     }
