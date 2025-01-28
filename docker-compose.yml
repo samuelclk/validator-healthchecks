@@ -1,0 +1,10 @@
+services:
+  tg-bot:
+    build: .
+    container_name: validator-healthchecks
+    env_file:
+      - .env
+    network_mode: host
+    volumes:
+      - ./logs:/var/log  # Mount logs for persistence
+    restart: always
