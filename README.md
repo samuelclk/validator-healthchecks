@@ -142,7 +142,7 @@ HTTP_SSV_NODE=http://127.0.0.1:16000/v1/node/health
 ## Add more EL, CL, or SSV node endpoints here as needed in this format: "HTTP_XX_XX". "HTTP" must be the prefix.
 
 # Command-based monitoring for validator clients
-COMMAND_VALIDATOR_CLIENT=curl -s http://127.0.0.1:8009/metrics | grep -E -q '(get_validators_liveness|beacon_attestation_included_total|lighthouse_validator_beacon_node_requests_total|nimbus_validator>
+COMMAND_VALIDATOR_CLIENT=curl -s http://127.0.0.1:8009/metrics | grep -E -q '(get_validators_liveness|beacon_attestation_included_total|lighthouse_validator_beacon_node_requests_total|nimbus_validator_attestations_total)' && echo "200 OK" || echo "500 ERROR"
 
 ## Add more VC endpoints here as needed in this format: "COMMAND_XX_XX=". "COMMAND" must be the prefix. Change only the "127.0.0.1:8009" part of the variable
 
