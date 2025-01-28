@@ -156,16 +156,15 @@ CHAT_ID=GROUP_CHAT_ID
 HEALTHCHECK_URL=https://hc-ping.com/your-unique-id
 
 # HTTP-based endpoints monitored via HTTP GET requests for EL, CL, & SSV nodes
-HTTP_EXECUTION_CLIENT=http://127.0.0.1:8545/health
 HTTP_CONSENSUS_CLIENT=http://127.0.0.1:8008/health
 HTTP_SSV_NODE=http://127.0.0.1:16000/v1/node/health
-## Add more EL, CL, or SSV node endpoints here as needed in this format: "HTTP_XX_XX". "HTTP" must be the prefix.
+## Add more CL or SSV node endpoints here as needed in this format: "HTTP_XX_XX". "HTTP" must be the prefix.
 
 # Command-based monitoring for validator clients
 COMMAND_VALIDATOR_CLIENT=curl -s http://127.0.0.1:8009/metrics | grep -E -q '(get_validators_liveness|beacon_attestation_included_total|lighthouse_validator_beacon_node_requests_total|nimbus_validator_attestations_total)' && echo "200 OK" || echo "500 ERROR"
 COMMAND_EXECUTION_CLIENT=curl -s http://127.0.0.1:6060/metrics | tr -d '\n' | grep -E -q 'ethereum_blockchain_height.*} [0-9]+.*ethereum_best_known_block_number.*} [0-9]+' && echo "200 OK" || echo "500 ERROR"
 
-## Add more VC endpoints here as needed in this format: "COMMAND_XX_XX=". "COMMAND" must be the prefix. Change only the "127.0.0.1:8009" part of the variable
+## Add more VC or EL endpoints here as needed in this format: "COMMAND_XX_XX=". "COMMAND" must be the prefix. Change only the "127.0.0.1:8009" part of the variable
 
 # P2P-based nodes for Obol Charon & SSV DKG (host:port format)
 P2P_OBOL_CHARON=127.0.0.1:3610
