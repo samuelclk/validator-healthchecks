@@ -85,7 +85,7 @@ You now have your `HEALTHCHECK_URL` and have both your own Telegram bot and the 
 ### Make sure your monitoring endpoints are accessible
 **All Users**
 1) **SSV node:** Enable the health endpoint by adding `SSVAPIPort: 16000` into the **config.yaml** file.
-2) **SSV DKG & Obol Charon:** No changes needed.
+2) **SSV DKG & Obol Charon:** No changes needed as we will query the P2P ports for these.
 
 **Systemd & EthPillar Users:**
 1) **Execution clients:** Add the `--http` or equivalent flag. This is set to port 8545 on default.
