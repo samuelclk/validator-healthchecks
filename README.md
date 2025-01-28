@@ -88,9 +88,9 @@ You now have your `HEALTHCHECK_URL` and have both your own Telegram bot and the 
 2) **SSV DKG & Obol Charon:** No changes needed as we will query the P2P ports for these.
 
 **Systemd & EthPillar Users:**
-1) **Execution clients:** Add the `--http` or equivalent flag. This is set to port 8545 on default.
-2) **Consensus client:** Add the `--metrics` or equivalent flag and set `--metrics-port=8008`
-3) **Validator client:** Add the `--metrics` or equivalent flag and set `--metrics-port=8009`
+1) **Execution clients:** Add the `--Metrics.Enabled true` and `--Metrics.ExposePort 6060` or equivalent flags
+2) **Consensus client:** Add the `--metrics` and `--metrics-port=8008` or equivalent flags
+3) **Validator client:** Add the `--metrics` and `--metrics-port=8009` or equivalent flags
 
 **Eth Docker Users:**
 
@@ -108,12 +108,32 @@ services:
   validator:
     ports:
       - ${SHARE_IP:-}:8009:8009/tcp
+
 ```
+```
+nano ~/eth-docker/el-shared.yml
+```
+Replace with the following:
+```
+# To be used in conjunction with erigon.yml, nethermind.yml, besu.yml or geth.yml
+services:
+  execution:
+    ports:
+      - ${SHARE_IP:-}:${EL_RPC_PORT}:${EL_RPC_PORT:-8545}/tcp
+      - ${SHARE_IP:-}:${EL_WS_PORT}:${EL_WS_PORT:-8546}/tcp
+      - ${SHARE_IP:-}:6060:6060/tcp
+```
+
 Edit the `.env` file.
 ```
 nano ~/eth-docker/.env
 ```
 Append `:el-shared.yml:cl-shared.yml` into the `COMPOSE_FILE=` line.
+
+Restart Eth Docker.
+```
+ethd up
+```
 
 ***Note:** You will have to make this edit everytime you update your Eth Docker repository.
 
@@ -143,6 +163,7 @@ HTTP_SSV_NODE=http://127.0.0.1:16000/v1/node/health
 
 # Command-based monitoring for validator clients
 COMMAND_VALIDATOR_CLIENT=curl -s http://127.0.0.1:8009/metrics | grep -E -q '(get_validators_liveness|beacon_attestation_included_total|lighthouse_validator_beacon_node_requests_total|nimbus_validator_attestations_total)' && echo "200 OK" || echo "500 ERROR"
+COMMAND_EXECUTION_CLIENT=curl -s http://127.0.0.1:6060/metrics | tr -d '\n' | grep -E -q 'ethereum_blockchain_height.*} [0-9]+.*ethereum_best_known_block_number.*} [0-9]+' && echo "200 OK" || echo "500 ERROR"
 
 ## Add more VC endpoints here as needed in this format: "COMMAND_XX_XX=". "COMMAND" must be the prefix. Change only the "127.0.0.1:8009" part of the variable
 
