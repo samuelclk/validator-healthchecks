@@ -198,8 +198,8 @@ If Healthchecks.io does not receive a message from your health checker service, 
 Most solo stakers rely on [beaconcha.in](https://beaconcha.in) watchlists to notify them when their validators are missing attestations. 
 
 However, in some scenarios, this method no longer works well for solo stakers. e.g.,
-**- Running many validator keys via Lido CSM or similar platforms:** It's not useful to receive 10 to 100 notifications every 6.5 minutes from beaconcha.in when the issue could lie with your EL, CL, or VC directly.
-**- Running DVTs:** Because your nodes could be offline without causing missed attestations--e.g., a cluster of X nodes is responsible for operating Y validator keyshares. 
+- **Running many validator keys via Lido CSM or similar platforms:** It's not useful to receive 10 to 100 notifications every 6.5 minutes from beaconcha.in when the issue could lie with your EL, CL, or VC directly.
+- **Running DVTs:** Because your nodes could be offline without causing missed attestations--e.g., a cluster of X nodes is responsible for operating Y validator keyshares. 
 
 This problem is especially pronounced for DVT operators as they may only act when the cluster fails to achieve consensus as a whole, leading to free-rider problems.
 
