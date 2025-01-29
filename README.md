@@ -5,7 +5,7 @@ Healthchecks.io (Free!) notifies users if the health checker service itself is o
 
 Follow me on [Twitter](https://x.com/stakesaurus) or subscribe to my [newsletter](https://stakesaurus.beehiiv.com/) if you find this useful for you!
 
-*Special thanks to Eridian for sharing about [healthchecks.io](https://healthchecks.io/) with me! He also has a more scalable monitoring/alerting setup which you can check out [here](https://docs.eridian.xyz/infrastructure-docs/alerting-and-monitoring).
+*Special thanks to [Eridian](https://x.com/EridianAlpha) for sharing about [healthchecks.io](https://healthchecks.io/) with me! He also has a more scalable monitoring/alerting setup which you can check out [here](https://docs.eridian.xyz/infrastructure-docs/alerting-and-monitoring).
 
 # How it works
 
