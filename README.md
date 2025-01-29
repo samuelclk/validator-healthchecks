@@ -67,8 +67,8 @@ https://api.telegram.org/botYOUR_BOT_TOKEN/getUpdates
 ```
 You now have your `BOT_TOKEN` and `CHAT_ID`.
 ### Healthchecks.io URL
-1) Go to Healthchecks.io.
-2) Sign-up/Log-in with your preferred method (email, GitHub, or Google).
+1) Go to [Healthchecks.io](https://healthchecks.io/)
+2) Sign-up/Log-in with your preferred method (email, GitHub, or Google)
 3) Click on "Add Check" on the dashboard. Select 5 minutes for the **Period** and 10 minutes for the **Grace Time** 
 4) On the check's configuration page, you’ll find a "Ping URL". It looks like this:
 ```
@@ -83,16 +83,21 @@ You now have your `HEALTHCHECK_URL` and have both your own Telegram bot and the 
 <img width="625" alt="Screenshot 2025-01-28 at 11 27 18 PM" src="https://github.com/user-attachments/assets/61cb2a70-6c37-4dc9-adcc-5cfbfd72fa06" />
 
 ### Make sure your monitoring endpoints are accessible
-**All Users**
+_**All Users:**_
 1) **SSV node:** Enable the health endpoint by adding `SSVAPIPort: 16000` into the **config.yaml** file.
 2) **SSV DKG & Obol Charon:** No changes needed as we will query the P2P ports for these.
 
-**Systemd & EthPillar Users:**
+_**Systemd & EthPillar Users:**_
 1) **Execution clients:** Add the `--Metrics.Enabled true` and `--Metrics.ExposePort 6060` or equivalent flags
 2) **Consensus client:** Add the `--metrics` and `--metrics-port=8008` or equivalent flags
 3) **Validator client:** Add the `--metrics` and `--metrics-port=8009` or equivalent flags
 
-**Eth Docker Users:**
+>**Notes:** 
+>- I prefer not to expose the EL's HTTP (8545) or CL's RPC (5052) ports to this service to reduce the risk of malicious code injection
+>- Nevertheless, do not expose these ports to the public internet
+
+
+_**Eth Docker Users:**_
 
 Map the monitoring ports of your EL, CL, & VC to the host
 ```
@@ -135,7 +140,9 @@ Restart Eth Docker.
 ethd up
 ```
 
-***Note:** You will have to make this edit everytime you update your Eth Docker repository.
+>**Notes:**
+>- You will have to make this edit everytime you update your Eth Docker repository.
+>- Do not expose these ports to the public internet
 
 ## Setup
 Clone this git repository
@@ -233,5 +240,5 @@ It's a lightweight solution ideal for scenarios where detailed metrics and alert
 
 Using [beaconcha.in](https://beaconcha.in)'s watchlist as an alerting mechanism is popular because it is simple to use, free, and requires no maintenance. These are also the design principles for my solution.
 
-_**Disclaimer:** This is meant to be a fun project for solo stakers and is in no way meant to replace professional monitoring tools used by institutions. There might also be other free + plug-and-play solutions out there._
+_**Disclaimer:** This is more of a fun project for solo stakers and does not replace professional monitoring tools.
 
