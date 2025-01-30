@@ -3,6 +3,7 @@ import sys
 import requests
 import subprocess
 import socket
+import re
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -10,7 +11,7 @@ load_dotenv()
 
 # Get credentials and configurations from environment variables
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-CHAT_ID = os.getenv("PERSONAL_CHAT_ID")
+CHAT_ID = os.getenv("CHAT_ID")
 HEALTHCHECK_URL = os.getenv("HEALTHCHECK_URL")
 TELEGRAM_API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
@@ -35,23 +36,34 @@ P2P_SERVERS = {
     if key.startswith("P2P_") and value
 }
 
+def sanitize_message(message):
+    """
+    Removes HTML-like tags to prevent Telegram parsing errors.
+    """
+    message = re.sub(r'<[^>]*>', '', message)  # Remove HTML tags
+    message = message.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")  # Encode any remaining symbols
+    return message
+
 def send_telegram_message(message):
     """
     Sends an alert message to the configured Telegram chat ID.
     """
+    sanitized_message = sanitize_message(message)  # Remove HTML tags
     payload = {
         'chat_id': CHAT_ID,
         'text': message,
-        'parse_mode': 'HTML'
+#        'parse_mode': 'HTML'
     }
     try:
         response = requests.post(TELEGRAM_API_URL, data=payload)
+        print(f"Telegram Response: {response.status_code}, {response.text}")  # Debugging info        
         if response.status_code == 200:
-            print(f"Notification sent successfully: {message}")
+            print(f"Notification sent successfully: {sanitized_message}")
         else:
             print(f"Failed to send message: {response.text}")
     except Exception as e:
-        print(f"Error sending message: {e}")
+        error_message = f"Error sending Telegram message: {sanitize_message(str(e))}"
+        print(error_message)  # Avoid recursive call to send_telegram_message
 
 def check_http_endpoint(name, url):
     """
