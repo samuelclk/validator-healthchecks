@@ -52,7 +52,6 @@ def send_telegram_message(message):
     payload = {
         'chat_id': CHAT_ID,
         'text': message,
-#        'parse_mode': 'HTML'
     }
     try:
         response = requests.post(TELEGRAM_API_URL, data=payload)
