@@ -5,6 +5,10 @@ import subprocess
 import socket
 import re
 from dotenv import load_dotenv
+import logging
+
+# Configure logging to capture all outputs
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Load environment variables from .env file
 load_dotenv()
@@ -51,18 +55,18 @@ def send_telegram_message(message):
     sanitized_message = sanitize_message(message)  # Remove HTML tags
     payload = {
         'chat_id': CHAT_ID,
-        'text': message,
+        'text': sanitized_message
     }
     try:
         response = requests.post(TELEGRAM_API_URL, data=payload)
-        print(f"Telegram Response: {response.status_code}, {response.text}")  # Debugging info        
+        logging.info(f"Telegram Response: {response.status_code}, {response.text}")  # Log Telegram response
+        print(f"Telegram Response: {response.status_code}, {response.text}")  # Debugging info
         if response.status_code == 200:
-            print(f"Notification sent successfully: {sanitized_message}")
+            logging.info(f"Notification sent successfully: {sanitized_message}")
         else:
-            print(f"Failed to send message: {response.text}")
+            logging.error(f"Failed to send message: {response.text}")
     except Exception as e:
-        error_message = f"Error sending Telegram message: {sanitize_message(str(e))}"
-        print(error_message)  # Avoid recursive call to send_telegram_message
+        logging.error(f"Error sending Telegram message: {sanitize_message(str(e))}")
 
 def check_http_endpoint(name, url):
     """
