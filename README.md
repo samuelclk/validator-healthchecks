@@ -144,7 +144,7 @@ Edit the `.env` file.
 ```
 nano ~/eth-docker/.env
 ```
-Append `:el-shared.yml:cl-shared.yml` into the `COMPOSE_FILE=` line. Additionally, for Geth EL, add `--metrics.port 6061` the following into the `EL_EXTRAS=` line.
+Append `:el-shared.yml:cl-shared.yml` into the `COMPOSE_FILE=` line. Additionally, **for Geth EL**, add `--metrics.port 6061` the following into the `EL_EXTRAS=` line.
 
 Restart Eth Docker.
 ```
