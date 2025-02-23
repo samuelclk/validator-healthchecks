@@ -181,7 +181,7 @@ HTTP_SSV_NODE=http://127.0.0.1:16000/v1/node/health
 # Command-based monitoring for validator clients
 COMMAND_VALIDATOR_CLIENT=curl -s http://127.0.0.1:8009/metrics | grep -E -q '(get_validators_liveness|beacon_attestation_included_total|lighthouse_validator_beacon_node_requests_total|nimbus_validator_attestations_total)' && echo "200 OK" || echo "500 ERROR"
 ## For Geth EL
-COMMAND_GETH_EL=curl -s http://127.0.0.1:6061/debug/metrics | jq -r '.["chain/head/block"] == .["chain/head/header"] and .["chain/head/block"] > 0' | grep -q true && echo "200 OK" || echo "500 ERROR"
+COMMAND_GETH_EL=curl -s http://127.0.0.1:6061/debug/metrics | tr -d "\n" | grep -E -q "\"chain/head/block\":[[:space:]]*([0-9]+).*\"chain/head/header\":[[:space:]]*\\1" && echo "200 OK" || echo "500 ERROR"
 ## For other ELs
 COMMAND_EXECUTION_CLIENT=curl -s http://127.0.0.1:6060/metrics | tr -d '\n' | grep -E -q 'ethereum_blockchain_height.*} [0-9]+.*ethereum_best_known_block_number.*} [0-9]+' && echo "200 OK" || echo "500 ERROR"
 
